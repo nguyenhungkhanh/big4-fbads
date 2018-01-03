@@ -20,6 +20,7 @@ var User = require('./models/user')
 
 app.use(cors())
 app.use(bodyParser.json())
+app.set(express.static('public'))
 
 var setToken = require('./middlewave/setToken')
 function checkRole(req, res, next) {
@@ -38,9 +39,7 @@ app.use('/api/v1/vendor/me', apiVendorMe)
 app.use('/api/v1/facebook/adaccounts', apiFcebookAdAccount )
 app.use('/api/v1/adaccounts', setToken, checkRole, apiAdAccount)
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + 'public/index.html')
-})
+app.get('/*', (req, res) => { res.sendFile(__dirname + '/public/index.html') })
 
 app.listen(config.port, () => {
   mongoose.Promise = global.Promise
