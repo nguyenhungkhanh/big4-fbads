@@ -1,0 +1,35 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch index.js --exec babel-node -- index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "axios": "^0.17.1",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "facebook-nodejs-ads-sdk": "^2.11.2",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.5",
+    "nodemailer": "^4.4.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "paypal-rest-sdk": "^1.8.1",
+    "randomstring": "^1.1.5",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
