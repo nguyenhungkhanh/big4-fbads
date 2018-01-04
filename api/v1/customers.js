@@ -145,7 +145,10 @@ router.post('/', (req, res) => {
 
   newCustomer.save((error, customer) => {
     if (error) res.status(500).json(error)
-    else res.status(200).json(customer)
+    else {
+      console.log('customer._id', customer._id)
+      res.status(200).json(customer)
+    }
   })
 })
 

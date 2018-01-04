@@ -15,12 +15,14 @@ var apiMe = require('./api/v1/me.js')
 var apiVendorMe = require('./api/vendor/me.js')
 var apiFcebookAdAccount = require('./api/facebook/adaccounts.js')
 var apiAdAccount = require('./api/v1/adaccounts')
+var apiConfigs = require('./api/v1/configs')
 
 var User = require('./models/user')
+var Configs = require('./models/configs')
 
 app.use(cors())
 app.use(bodyParser.json())
-app.set(express.static('public'))
+app.use(express.static('public'))
 
 var setToken = require('./middlewave/setToken')
 function checkRole(req, res, next) {
@@ -38,6 +40,7 @@ app.use('/api/v1/me', setToken, apiMe)
 app.use('/api/v1/vendor/me', apiVendorMe)
 app.use('/api/v1/facebook/adaccounts', apiFcebookAdAccount )
 app.use('/api/v1/adaccounts', setToken, checkRole, apiAdAccount)
+app.use('/api/v1/configs', apiConfigs)
 
 app.get('/*', (req, res) => { res.sendFile(__dirname + '/public/index.html') })
 
@@ -61,6 +64,24 @@ app.listen(config.port, () => {
           promise.then(function (newUser) {
             console.log(newUser)
           });
+        }
+      })
+
+      Configs.find({}, (error, configs) => {
+        if (error) res.status(500).json(error)
+        else {
+          if (configs.length === 0) {
+            let newConfig = new Configs({
+              discounts: {
+                vip: "",
+                normal: ""
+              }
+            })
+            let promiseConfig = newConfig.save()
+            promiseConfig.then(newConfig => {
+              console.log(newConfig)
+            })
+          }
         }
       })
     })

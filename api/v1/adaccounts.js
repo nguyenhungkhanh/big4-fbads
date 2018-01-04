@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   axios.get(`${versionGraphFacebook}/me/businesses?access_token=${req.body.accessToken}`)
     .then(response => {
-      // req.body.created_time = new Date()
+      req.body.created_time = new Date()
       let newAdAccount = new AdAccount(req.body)
 
       newAdAccount.save((error, adaccount) => {
