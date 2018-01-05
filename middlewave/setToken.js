@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
     jwt.verify(token, config.jsonwebtoken, (error, decode) => {
       if (error) {
         if(error.name === 'TokenExpiredError') {
-          res.status(500).json({ status: 500, message: 'TokenExpiredError'}) 
+          res.status(500).json({ status: 401, message: 'TokenExpiredError'}) 
         } else res.status(401).json(error);
       } else {
         User.findById(decode.id, (error, user) => {
@@ -37,7 +37,7 @@ module.exports = (req, res, next) => {
       }
     })
   } else {
-    res.status(401).json({ err: 'You need token!!!' }); // code ở đây là 403 hay 401?? 
+    res.status(401).json({ error: 'You need token!!!' }); // code ở đây là 403 hay 401?? 
     // Sửa 403 -> 401
   }
 }

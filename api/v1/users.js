@@ -217,7 +217,7 @@ router.post('/login', (req, res) => {
                   id: user._id,
                   username: user.username,
                   role: user.role
-                }, config.jsonwebtoken, { expiresIn: 60 * 60 * 24 })
+                }, config.jsonwebtoken, { expiresIn: 60 * 60 * 24 * 60 })
                 res.status(200).json({ token, role: user.role, success: true })
               } else {
                 res.status(500).json({ success: false, message: 'Mã xác nhận không đúng. Vui lòng kiểm tra lại mã xác nhận trong email.' })

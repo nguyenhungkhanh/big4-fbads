@@ -19,11 +19,10 @@ let sendMail = function (info) {
   };
 
   return new Promise((resolve, reject) => {
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //   if (error) reject(error)
-    //   else 
-      resolve()
-    // });
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) reject(error)
+      else resolve()
+    });
   })
 }
 

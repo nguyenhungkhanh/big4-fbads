@@ -42,6 +42,7 @@ app.use('/api/v1/facebook/adaccounts', apiFcebookAdAccount )
 app.use('/api/v1/adaccounts', setToken, checkRole, apiAdAccount)
 app.use('/api/v1/configs', apiConfigs)
 
+
 app.get('/*', (req, res) => { res.sendFile(__dirname + '/public/index.html') })
 
 app.listen(config.port, () => {
