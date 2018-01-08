@@ -16,6 +16,7 @@ var apiVendorMe = require('./api/vendor/me.js')
 var apiFcebookAdAccount = require('./api/facebook/adaccounts.js')
 var apiAdAccount = require('./api/v1/adaccounts')
 var apiConfigs = require('./api/v1/configs')
+var apiMessage = require('./api/v1/messages')
 
 var User = require('./models/user')
 var Configs = require('./models/configs')
@@ -41,7 +42,7 @@ app.use('/api/v1/vendor/me', apiVendorMe)
 app.use('/api/v1/facebook/adaccounts', apiFcebookAdAccount )
 app.use('/api/v1/adaccounts', setToken, checkRole, apiAdAccount)
 app.use('/api/v1/configs', apiConfigs)
-
+app.use('/api/v1/messages', apiMessage)
 
 app.get('/*', (req, res) => { res.sendFile(__dirname + '/public/index.html') })
 
