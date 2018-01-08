@@ -26,6 +26,7 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 var setToken = require('./middlewave/setToken')
+
 function checkRole(req, res, next) {
   if(req.decode.role !== null && req.decode.role < 2) next()
   else res.status(403).json({ message: 'Bạn không có quyền truy cập api này!!!'})
