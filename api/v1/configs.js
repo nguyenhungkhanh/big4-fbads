@@ -30,36 +30,24 @@ router.post('/discounts/:type', (req, res) => {
   Configs.find({}, (error, configs) => {
     if (error) res.status(500).json(error)
     else {
-      if (configs.length !== 0) {
-        if (type === 'vip' && configs[0].discounts.vip) res.status(500).json({ error: { message: 'Đã có giá trị chiết khấu cho khách hàng vip.' } })
-        if (type === 'vip') {
-          let discount = {
-            price: `${req.body.min}-${req.body.max}`,
-            value: `${req.body.value}`
-          }
-          configs[0].discounts.vip = JSON.stringify(discount)
-          configs[0].save()
+      if (type === 'vip') {
+        let discount = {
+          price: `${req.body.min}-${req.body.max}`,
+          value: `${req.body.value}`
         }
-        if (type === 'normal') {
-          let discount = {
-            price: `${req.body.min} - ${req.body.max}`,
-            value: `${req.body.value}`
-          }
-          if(configs[0].discounts.normal && configs[0].discounts.normal.includes('null')) {
-            configs[0].discounts.normal = configs[0].discounts.normal.replace('null', '')
-          }
-          configs[0].discounts.normal += JSON.stringify(discount) + '*'
-          configs[0].save()
-        }
+        configs[0].discounts.vip = JSON.stringify(discount)
+        configs[0].save()
       }
-      else {
-        let newConfig = new Configs({
-          discounts: {
-            vip: "",
-            normal: ""
-          }
+      if (type === 'normal') {
+        let discount = {
+          price: `${req.body.min}-${req.body.max}`,
+          value: `${req.body.value}`
+        }
+        configs[0].discounts.normal.push(discount)
+        configs[0].save(error => {
+          if(!error) res.status(200).json({ success: true })
+          else res.status(500).json({ success: false, error })
         })
-        newConfig.save()
       }
     }
   })

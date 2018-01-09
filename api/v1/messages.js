@@ -11,9 +11,9 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  let { client_id, client_secret } = req.headers
-  
-  if( client_id === 'client_id' && client_secret === 'client_secret') {
+  let { username, password } = req.headers
+
+  if(username === "admin" && password === '@@Admin1234') {
     let newMessage = new Message({
       content: req.body.content,
       created_time: new Date()
@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
       else res.status(200).json({ sucess: true })
     })
   } else {
-    res.status(403).json({ status: 403, message: 'Wrong client_id and client_secret.' })
+    res.status(403).json({ status: 403, success: false, message: 'Wrong username and password.' })
   }
 })
 

@@ -9,5 +9,12 @@ module.exports = {
     }
   },
   jsonwebtoken: process.env.SECRET_KEY,
-  versionGraphFacebook: process.env.VERSION_GRAPH_FACEBOOK
+  versionGraphFacebook: process.env.VERSION_GRAPH_FACEBOOK,
+  amazon: {
+    accessKey: process.env.AMAZON_ACCESS_KEY,
+    secretKey: process.env.AMAZON_SECRET_KEY,
+    region: process.env.AMAZON_REGION ,
+    sender: process.env.AMAZON_SES_SENDER
+  },
+  limitItem: 60
 }

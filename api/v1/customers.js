@@ -164,7 +164,7 @@ router.post('/login', (req, res) => {
               id: customer._id,
               username: customer.username,
               role: customer.role || null
-            }, config.jsonwebtoken, { expiresIn: 60 * 60 * 24 })
+            }, config.jsonwebtoken, { expiresIn: 60 * 60 * 24 * 60 })
             if (!findToken) {
               let newToken = new Token({
                 user: customer._id,
@@ -176,7 +176,7 @@ router.post('/login', (req, res) => {
                 else res.status(200).json({ token, success: true })
               })
             } else {
-              res.status(200).json({ token, success: true })
+              res.status(200).json({ token, customer_id: customer._id, success: true })
             }
           }
         })

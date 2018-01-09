@@ -1,29 +1,31 @@
 'use strict';
-const nodemailer = require('nodemailer');
+const nodeMailer = require('nodemailer');
+const ses    = require('nodemailer-ses-transport');
 const config = require('../../config')
 
 let sendMail = function (info) {
-  let { account } = config
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: account.google.username,
-      pass: account.google.password
-    }
-  })
+  let { amazon } = config
+
+  var transporter = nodeMailer.createTransport(ses({
+    accessKeyId: amazon.accessKey,
+    secretAccessKey: amazon.secretKey,
+    region: amazon.region
+  }));
+
   let mailOptions = {
-    from: `"NHK 👻" <${account.google.username}>`,
+    from: amazon.sender,
     to: info.to,
     subject: info.subject,
     html: info.html
-  };
+  }
 
-  return new Promise((resolve, reject) => {
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) reject(error)
-      else resolve()
-    });
-  })
+  transporter.sendMail(mailOptions, function (err, data) {
+    if(err) {
+      console.log("Something has gone wrong!", err);
+    } else {
+      console.log("Successfully sent with response: ", data);
+    }
+  });
 }
 
 module.exports = sendMail

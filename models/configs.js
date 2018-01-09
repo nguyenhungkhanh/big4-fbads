@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 let ConfigSchema = new Schema({
   discounts: {
-    vip: String,
-    normal: String
+    vip: Number,
+    normal: Array
   }
 })
 

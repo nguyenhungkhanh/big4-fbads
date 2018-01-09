@@ -3,8 +3,7 @@ var AdAccount = require('../../models/account_ads')
 var axios = require('axios')
 var config = require('../../config')
 
-const { versionGraphFacebook } = config
-
+const { versionGraphFacebook, limitItem } = config
 var router = express.Router()
 
 router.get('/', (req, res) => {
@@ -62,29 +61,7 @@ router.get('/:idAdAccount/businesses', (req, res) => {
     if (!adaccount) {
       return res.status(404).json({ status: 404, errors: 'Object not found' });
     } else {
-      axios.get(`${versionGraphFacebook}/me/businesses?access_token=${adaccount.accessToken}`)
-        .then(response => {
-          console.log('response.data.data', response.data.data)
-          return res.status(200).json(response.data.data)
-        }, error => {
-          if (error.response.status === 400)
-            res.status(500).json(error.response.data)
-        }).catch(error => {
-          if (error.response.status === 400)
-            res.status(500).json(error.response.data)
-        })
-    }
-  })
-})
-
-router.get('/:idAdAccount/adaccounts', (req, res) => {
-  AdAccount.findById(req.params.idAdAccount, (error, adaccount) => {
-    if (error) throw error;
-
-    if (!adaccount) {
-      return res.status(404).json({ status: 404, errors: 'Object not found' });
-    } else {
-      axios.get(`${versionGraphFacebook}/me/adaccounts?fields=id,name,created_time,funding_source,account_status,currency,spend_cap,amount_spent&access_token=${adaccount.accessToken}`)
+      axios.get(`${versionGraphFacebook}/me/businesses?limit=${limitItem}&access_token=${adaccount.accessToken}`)
         .then(response => {
           console.log('response.data.data', response.data.data)
           return res.status(200).json(response.data.data)
@@ -109,10 +86,34 @@ router.get('/:idAdAccount/businesses/:idBusiness/adaccounts', (req, res) => {
     if (!adaccount) {
       return res.status(404).json({ status: 404, errors: 'Object not found' });
     } else {
-      axios.get(`${versionGraphFacebook}/${req.params.idBusiness}/adaccounts?fields=id,name,created_time,funding_source,account_status,currency,spend_cap,amount_spent&access_token=${adaccount.accessToken}`)
+      axios.get(`${versionGraphFacebook}/${req.params.idBusiness}/adaccounts?limit=${limitItem}&fields=id,name,created_time,funding_source,account_status,currency,spend_cap,amount_spent&access_token=${adaccount.accessToken}`)
         .then(response => {
           return res.status(200).json(response.data.data)
 
+        }, error => {
+          if (error.response.status === 400)
+            res.status(500).json(error.response.data)
+        }).catch(error => {
+          if (error.response.status === 400)
+            res.status(500).json(error.response.data)
+        })
+    }
+  })
+})
+
+/**
+ * Api trả về tài khoản quảng cáo cá nhân 
+ */
+router.get('/:idAdAccount/adaccounts', (req, res) => {
+  AdAccount.findById(req.params.idAdAccount, (error, adaccount) => {
+    if (error) throw error;
+
+    if (!adaccount) {
+      return res.status(404).json({ status: 404, errors: 'Object not found' });
+    } else {
+      axios.get(`${versionGraphFacebook}/me/adaccounts?limit=${limitItem}&fields=id,name,created_time,funding_source,account_status,currency,spend_cap,amount_spent&access_token=${adaccount.accessToken}`)
+        .then(response => {
+          return res.status(200).json(response.data.data)
         }, error => {
           if (error.response.status === 400)
             res.status(500).json(error.response.data)
@@ -136,7 +137,7 @@ router.get('/:idAdAccount/:idAct/campaigns', (req, res) => {
     if (!adaccount) {
       return res.status(404).json({ status: 404, errors: 'Object not found' });
     } else {
-      axios.get(`${versionGraphFacebook}/${req.params.idAct}/campaigns?fields=name,account_id,adlabels,status,created_time,start_time,stop_time,updated_time&access_token=${adaccount.accessToken}`)
+      axios.get(`${versionGraphFacebook}/${req.params.idAct}/campaigns?limit=${limitItem}&fields=name,account_id,adlabels,status,created_time,start_time,stop_time,updated_time&access_token=${adaccount.accessToken}`)
         .then(response => {
           return res.status(200).json(response.data.data)
 

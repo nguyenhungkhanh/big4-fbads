@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.5",
     "nodemailer": "^4.4.0",
+    "nodemailer-ses-transport": "^1.5.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "paypal-rest-sdk": "^1.8.1",
     "randomstring": "^1.1.5",
