@@ -6,7 +6,7 @@ let Message = require('../../models/message')
 router.get('/', (req, res) => {
   Message.find({}, (error, messages) => {
     if(error) res.status(500).json(error)
-    else res.status(200).json(messages)
+    else res.status(200).json(messages[messages.length - 1])
   })
 })
 
@@ -16,6 +16,7 @@ router.post('/', (req, res) => {
   if(username === "admin" && password === '@@Admin1234') {
     let newMessage = new Message({
       content: req.body.content,
+      from_number: req.body.from_number,
       created_time: new Date()
     })
     newMessage.save((errorMessage, message) => {

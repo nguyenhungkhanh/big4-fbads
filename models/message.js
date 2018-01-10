@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const MessageSchema = new Schema({
   transaction_id: { type: String, ref: 'Transaction'},
   content: { type: String, required: true },
+  from_number: Number,
   created_time: Date
 }, {
     toJSON: {
